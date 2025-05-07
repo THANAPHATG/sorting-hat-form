@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sorting Hat Form</title>
+</head>
+<body>
+  <h2>Enter Your Sorting Result</h2>
+  <form id="sortingForm">
+    <input type="text" placeholder="ชื่อ-นามสกุล" id="name" required><br><br>
+    <input type="text" placeholder="รหัสนักศึกษา 8 หลัก" id="student_id" required><br><br>
+    <input type="text" placeholder="บ้านที่เหมาะสม (Gryffindor, Hufflepuff, ฯลฯ)" id="house" required><br><br>
+    <input type="text" placeholder="สายงานธุรกิจที่เหมาะสม" id="role" required><br><br>
+    <button type="submit">ส่งข้อมูล</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/https://script.google.com/a/macros/spu.ac.th/s/AKfycbxFRBzhSBqPhqyAGSoq80pVlNx-bzcDjdIzzffc_G1bhmQDlYyPDExB1oKpjcFzNC0/exec";
+
+    document.getElementById("sortingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        student_id: document.getElementById("student_id").value,
+        house: document.getElementById("house").value,
+        role: document.getElementById("role").value
+      };
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => document.getElementById("status").innerText = "📌 ส่งข้อมูลสำเร็จแล้ว!")
+      .catch(err => document.getElementById("status").innerText = "❌ เกิดข้อผิดพลาด");
+    });
+  </script>
+</body>
+</html>
